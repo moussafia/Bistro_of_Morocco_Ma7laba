@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\plat;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreAddReques;
+
 
 class PlatController extends Controller
 {
@@ -33,9 +35,18 @@ class PlatController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAddReques $request)
     {
-        //
+        $validata = $request->validated();
+        // dd($validata); // var_dump() + die()
+        $image_path = $request->file('imagePlat')->store('image', 'public');
+        plat::create([
+            'title'=>$request->Title,
+            'description'=>$request->description,
+            'path' => $image_path,
+        ]);
+        // session()->flash('succes', 'image été enregistrer');
+        return redirect()->route;
     }
 
     /**

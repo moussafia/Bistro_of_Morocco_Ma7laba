@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class plat extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'title','description','path'
+    ];
 }

@@ -35,7 +35,7 @@
             <button type="button" class="btn btn-dark">Delete All</button>
         </div>
         <div>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="">Add</button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ADD" data-bs-whatever="">Add</button>
         </div>
     </div>
     <div class="mx-4 my-5">
@@ -57,7 +57,7 @@
                 <td style="heigth: 40px;"><img height="100" src="{{URL::asset('image/fancy-cakes-on-banquet-table.jpg')}}"></td>
                 <td>
                     <div>
-                        <button type="button" class="btn btn-warning">Edit</button>
+                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit" data-bs-whatever="">Edit</button>
                         <button type="button" class="btn btn-danger">Delete</button>
                     </div>
                 </td>
@@ -78,9 +78,51 @@
           </div>
         </div>
       </div>
-   
 </section>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- add les plats -->
+<div class="modal fade" id="ADD" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{route('posts.store')}}" method="post" enctype="multipart/form-data">
+          @csrf
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">Title</label>
+            <input type="text" class="form-control"  name="Title">
+            @error('Title')
+            {{ $message }}
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="recipient-name" class="col-form-label">image</label>
+            <input type="file" class="form-control" name="imagePlat">
+            @error('imagePlat')
+            {{ $message }}
+            @enderror
+          </div>
+          <div class="mb-3">
+            <label for="message-text" class="col-form-label">Description</label>
+            <textarea class="form-control" name="description"></textarea>
+          @error('description')
+          {{ $message }}
+          @enderror
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button  class="btn btn-primary" type="submit">share</button>
+          </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<!-- edit les plats -->
+<div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -106,7 +148,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">share</button>
+        <button type="submit" class="btn btn-primary">share</button>
       </div>
     </div>
   </div>
