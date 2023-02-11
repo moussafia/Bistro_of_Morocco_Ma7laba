@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\plat;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAddReques;
+use App\Traits\UploadImageTrait;
+
 
 
 class PlatController extends Controller
 {
+    use UploadImageTrait;
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +19,8 @@ class PlatController extends Controller
      */
     public function index()
     {
-        //
+        $fetsh=plat::get();
+        return view('pages.dashboard',compact('fetsh'));
     }
 
     /**
@@ -39,14 +43,16 @@ class PlatController extends Controller
     {
         $validata = $request->validated();
         // dd($validata); // var_dump() + die()
-        $image_path = $request->file('imagePlat')->store('image', 'public');
-        plat::create([
-            'title'=>$request->Title,
-            'description'=>$request->description,
-            'path' => $image_path,
-        ]);
+        
+        // plat::create([
+        //     'title'=>$request->Title,
+        //     'description'=>$request->description,
+        //     'path' => $image_path,
+        // ]);
         // session()->flash('succes', 'image été enregistrer');
-        return redirect()->route;
+        $image_path = $request->file('imagePlat')->getClientOriginalName();
+        $path=$request->$image_path->storeAs($foldername,date('YmdHi').$image_path,'mohammed');
+        return $path;
     }
 
     /**
@@ -57,7 +63,7 @@ class PlatController extends Controller
      */
     public function show(plat $plat)
     {
-        //
+        
     }
 
     /**

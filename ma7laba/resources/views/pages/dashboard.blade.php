@@ -50,11 +50,12 @@
               </tr>
             </thead>
             <tbody>
+              {{-- @foreach ($fetsh as $item) --}}
               <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto erg regrf ergrfg sfgqsfg fgfd</td>
-                <td style="heigth: 40px;"><img height="100" src="{{URL::asset('image/fancy-cakes-on-banquet-table.jpg')}}"></td>
+                <th scope="row"></th>
+                <td></td>
+                <td></td>
+                <td style="heigth: 40px;"><img height="100" src=""></td>
                 <td>
                     <div>
                         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit" data-bs-whatever="">Edit</button>
@@ -62,6 +63,7 @@
                     </div>
                 </td>
               </tr>
+              {{-- @endforeach --}}
             </tbody>
           </table>
     </div>
