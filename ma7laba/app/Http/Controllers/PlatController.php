@@ -41,18 +41,16 @@ class PlatController extends Controller
      */
     public function store(StoreAddReques $request)
     {
-        $validata = $request->validated();
-        // dd($validata); // var_dump() + die()
-        
-        // plat::create([
-        //     'title'=>$request->Title,
-        //     'description'=>$request->description,
-        //     'path' => $image_path,
-        // ]);
+        $request->validated();
+        // dd($request->Title); // var_dump() + die()
+        plat::create([
+            'title'=>$request->Title,
+            'description'=>$request->description,
+            'path' => $this->uploadImage($request)
+        ]);
         // session()->flash('succes', 'image été enregistrer');
-        $image_path = $request->file('imagePlat')->getClientOriginalName();
-        $path=$request->$image_path->storeAs($foldername,date('YmdHi').$image_path,'mohammed');
-        return $path;
+        return 'nadi';
+
     }
 
     /**
@@ -72,9 +70,10 @@ class PlatController extends Controller
      * @param  \App\Models\plat  $plat
      * @return \Illuminate\Http\Response
      */
-    public function edit(plat $plat)
+    public function edit($id)
     {
-        //
+       $post=plat::findorFail($id);
+       return view('pages.dashboard',compact('post'));
     }
 
     /**
