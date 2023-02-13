@@ -23,11 +23,16 @@ class StoreAddReques extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules= [
             'Title'=>'required|max:255',
-            'imagePlat'=>'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'description'=>'required|max:1255'
         ];
+        if($this->input('imagePlat')){
+            $rules['imagePlat']='required|image|mimes:jpg,png,jpeg,gif,svg|max:2048';
+        }   else{
+            $rules['imagePlat']='sometimes|image|mimes:jpg,png,jpeg,gif,svg|max:2048';
+        }
+        return $rules;
     }
 }
 

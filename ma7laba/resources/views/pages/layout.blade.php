@@ -9,7 +9,8 @@
     </title>
 </head>
 <body class="overflow-x-hidden">
-    @yield('nav');
-    @yield('content');
+    @yield('formaddplat')
+    @yield('nav')
+    @yield('content')
 </body>
 </html>

@@ -49,7 +49,7 @@ class PlatController extends Controller
             'path' => $this->uploadImage($request)
         ]);
         // session()->flash('succes', 'image été enregistrer');
-        return 'nadi';
+        return redirect()->route('posts.index');
 
     }
 
@@ -73,7 +73,7 @@ class PlatController extends Controller
     public function edit($id)
     {
        $post=plat::findorFail($id);
-       return view('pages.dashboard',compact('post'));
+       return view('pages.edit',compact('post'));
     }
 
     /**
@@ -83,9 +83,25 @@ class PlatController extends Controller
      * @param  \App\Models\plat  $plat
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, plat $plat)
-    {
-        //
+    public function update(StoreAddReques $request, plat $plat,$id)
+    {           
+        $request->validated();
+        if(empty($request->has('imagePlat'))){
+            $request->except('imagePlat');
+            plat::where('id', $id)->update([
+                'Title' => $request->input('Title'),
+                'description' => $request->input('description'),
+            ] ) ;
+        }else{
+                plat::where('id', $id)->update([
+                    'Title' => $request->input('Title'),
+                    'description' => $request->input('description'),
+                    'path' => $this->uploadImage($request)
+                ] ) ;
+            }
+        
+        return redirect()->route('posts.index');
+        
     }
 
     /**
@@ -94,8 +110,9 @@ class PlatController extends Controller
      * @param  \App\Models\plat  $plat
      * @return \Illuminate\Http\Response
      */
-    public function destroy(plat $plat)
+    public function destroy(plat $plat,$id)
     {
-        //
+        plat::destroy($id);
+        return redirect()->route('posts.index');
     }
 }
