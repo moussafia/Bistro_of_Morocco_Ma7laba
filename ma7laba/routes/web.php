@@ -44,5 +44,7 @@ Route::middleware([
     Route::get('Menu',function(){
         return view('pages.menu',['fetsh'=>plat::all()]);
     })->name('menu');
+    Route::delete('deleteALL',[PlatController::class,'deleteALL'])->name('deleteALL');
+    
 });
 

@@ -117,4 +117,8 @@ class PlatController extends Controller
         plat::destroy($id);
         return redirect()->route('dashboard');
     }
+    public function deleteALL(){
+        plat::truncate();
+        return redirect()->route('dashboard');
+    }
 }
