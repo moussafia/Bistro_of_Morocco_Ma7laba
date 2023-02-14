@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\PlatController;
+use App\Models\plat;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CheckStatus;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,23 +15,34 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('dashboard',function(){
-    return redirect('/posts');
-})->name('page.home');
-Route::get('add', function () {
-    return view('pages.add');
-})->name('addPlat');
-Route::resource('posts', PlatController::class);
-// Route::middleware([
-//     'auth:sanctum',
-//     config('jetstream.auth_session'),
-//     'verified'
-// ])->group(function () {
-//     Route::get('/dashboard', function () {
-//         return view('dashboard');
-//     })->name('dashboard');
-// });
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('/redirect',[CheckStatus::class,'index'])->name('normalUser');
+    Route::get('user',function(){
+        return view('user',['fetsh'=>plat::all()]);
+    })->name('user');
+});
+
+Route::middleware([
+    'auth',
+    'CheckUser'
+])->group(function () {
+    Route::resource('posts', PlatController::class);
+    Route::get('posts',function(){
+        return view('dashboard',['fetsh'=>plat::all()]);
+    })->name('page.home');
+    Route::get('add', function () {
+        return view('pages.add');
+    })->name('addPlat');
+    
+    Route::get('/dashboard', function () {
+        return view('dashboard',['fetsh'=>plat::all()]);
+    })->name('dashboard');
+    Route::get('Menu',function(){
+        return view('pages.menu',['fetsh'=>plat::all()]);
+    })->name('menu');
+});
+

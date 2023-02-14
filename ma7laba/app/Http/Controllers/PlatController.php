@@ -20,7 +20,8 @@ class PlatController extends Controller
     public function index()
     {
         $fetsh=plat::get();
-        return view('pages.dashboard',compact('fetsh'));
+        // return view('dashboard',compact('fetsh'));
+        return view('dashboard',['fetsh'=>$fetsh]);
     }
 
     /**
@@ -49,7 +50,7 @@ class PlatController extends Controller
             'path' => $this->uploadImage($request)
         ]);
         // session()->flash('succes', 'image été enregistrer');
-        return redirect()->route('posts.index');
+        return redirect()->route('dashboard');
 
     }
 
@@ -99,8 +100,9 @@ class PlatController extends Controller
                     'path' => $this->uploadImage($request)
                 ] ) ;
             }
-        
-        return redirect()->route('posts.index');
+        // return redirect()->route('dashboard');
+
+        return self::index();
         
     }
 
@@ -113,6 +115,6 @@ class PlatController extends Controller
     public function destroy(plat $plat,$id)
     {
         plat::destroy($id);
-        return redirect()->route('posts.index');
+        return redirect()->route('dashboard');
     }
 }
